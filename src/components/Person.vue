@@ -1,6 +1,6 @@
 <template>
-  <div class="person tooltip" @click="selected">{{this.person.Name}}
-    <span class="tooltiptext">Special Info for {{this.person.Name}}</span>
+  <div class="person hover-shadow" @click="selected">
+    <h1>{{this.person.Name}}</h1>
   </div>
 </template>
 
@@ -19,45 +19,47 @@ export default {
         Name: "Unloaded",
         ParentIDs: [],
         ChildrenIDs: [],
-        PersonID: null
+        PersonID: null,
       },
     };
   },
   async created() {
     if (this.personID != undefined) {
-      let value = await DBService.GetPersonByID(this.personID)
+      let value = await DBService.GetPersonByID(this.personID);
       this.person = value[0];
     }
   },
   methods: {
     selected() {
-      this.$emit("rooted", { PersonID: this.person.PersonID});
+      this.$emit("rooted", { PersonID: this.person.PersonID });
     },
   },
 };
 </script>
 
 <style>
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-}
-
 .person {
-  background-color: #F0CEA0;
-  padding: 0 1.5em;
+  background-color: #f0cea0;
+  padding: 0 1.5%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  transition: all 0.6s ease;
+  display: inline-block;
+  box-sizing: border-box;
+  margin: auto 1%;
 }
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
+.person:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
+  transform: translateY(-4px);
+}
+
+.person:active {
+  transform: none;
+}
+
+.person h1 {
+  background-color: #f0cea0;
+  font-family: "Roboto", sans-serif;
 }
 </style>
