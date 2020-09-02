@@ -1,6 +1,7 @@
 **/node_modules
-.firebaserc
 **/.firebase
 **/firebase-debug.log
-services/firebaseConfig.js
-dist/
+**/services/firebaseConfig.js
+**/dist/
+**/key.json
+.firebaserc
