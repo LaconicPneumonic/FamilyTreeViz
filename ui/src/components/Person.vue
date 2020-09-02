@@ -19,7 +19,8 @@ export default {
         Name: "Unloaded",
         ParentIDs: [],
         ChildrenIDs: [],
-        PersonID: null,
+        PersonID: undefined,
+        SpouseID: undefined
       },
     };
   },

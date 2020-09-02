@@ -26,9 +26,9 @@
       <h1 class="title">SPOUSE:</h1>
       <Person
         class="spaced"
-        v-if="this.root.PersonID"
-        :key="this.root.PersonID"
-        :personID="this.root.PersonID"
+        v-if="this.root.SpouseID"
+        :key="this.root.SpouseID"
+        :personID="this.root.SpouseID"
         @rooted="onPersonClick"
       />
     </div>
@@ -62,6 +62,7 @@ export default {
         PersonID: undefined,
         ParentIds: [],
         ChildrenIDs: [],
+        SpouseID: undefined
       },
     };
   },
