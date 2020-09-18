@@ -49,15 +49,16 @@
 
 <script>
 import Person from "@/components/Person.vue";
-import DBService from "@/services/DBService.js";
 
 export default {
   name: "familyview",
   components: {
     Person,
   },
+
   data() {
     return {
+      user: null,
       root: {
         PersonID: undefined,
         ParentIds: [],
@@ -66,16 +67,23 @@ export default {
       },
     };
   },
+  
   async created() {
-    let value = await DBService.GetFirstPerson();
+    let value = await this.$dbservice.GetFirstPerson();
     this.root = value[0];
+    this.$dbservice.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.user = user
+      } else {
+        this.$router.push("/")
+      }
+    })
   },
 
   methods: {
     async onPersonClick(newRoot) {
-      console.log(newRoot);
       if (newRoot.PersonID != this.root.PersonID) {
-        let value = await DBService.GetPersonByID(newRoot.PersonID);
+        let value = await this.$dbservice.GetPersonByID(newRoot.PersonID);
         this.root = Object.assign({}, this.root, value[0]);
       }
     },

@@ -1,17 +1,15 @@
 <template>
-  <div class="person hover-shadow" @click="selected">
+  <div class="person hover-shadow clearfix" @click="selected">
     <h1>{{this.person.Name}}</h1>
   </div>
 </template>
 
 <script>
-import DBService from "@/services/DBService.js";
 
 export default {
   name: "Person",
   props: {
     personID: Number,
-    default: -1,
   },
   data() {
     return {
@@ -26,7 +24,7 @@ export default {
   },
   async created() {
     if (this.personID != undefined) {
-      let value = await DBService.GetPersonByID(this.personID);
+      let value = await this.$dbservice.GetPersonByID(this.personID);
       this.person = value[0];
     }
   },
@@ -47,7 +45,17 @@ export default {
   transition: all 0.6s ease;
   display: inline-block;
   box-sizing: border-box;
-  margin: auto 1%;
+  margin: 1% 1%;
+}
+
+.person * {
+  background-color: #f0cea0;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 .person:hover {
@@ -60,7 +68,6 @@ export default {
 }
 
 .person h1 {
-  background-color: #f0cea0;
   font-family: "Roboto", sans-serif;
 }
 </style>
