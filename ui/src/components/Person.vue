@@ -1,5 +1,5 @@
 <template>
-  <div class="person hover-shadow clearfix" @click="selected">
+  <div class="person hover-shadow" @click="selected">
     <h1>{{this.person.Name}}</h1>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
   async created() {
     if (this.personID != undefined) {
       let value = await this.$dbservice.GetPersonByID(this.personID);
-      this.person = value[0];
+      this.person = value;
     }
   },
   methods: {
@@ -50,12 +50,6 @@ export default {
 
 .person * {
   background-color: #f0cea0;
-}
-
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
 }
 
 .person:hover {

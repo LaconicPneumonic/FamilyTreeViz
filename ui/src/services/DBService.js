@@ -33,7 +33,7 @@ async function GetPersonByID(personID) {
         query.forEach(function (doc) {
             arr.push(doc.data());
         });
-        return arr;
+        return arr.length == 0 ? null : arr[0];
     } catch (error) {
         return null;
     }
@@ -49,7 +49,7 @@ async function GetFirstPerson() {
         query.forEach(function (doc) {
             arr.push(doc.data());
         });
-        return arr;
+        return arr.length == 0 ? null : arr[0];
     } catch (error) {
         return null;
     }

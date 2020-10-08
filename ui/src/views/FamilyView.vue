@@ -70,21 +70,14 @@ export default {
   
   async created() {
     let value = await this.$dbservice.GetFirstPerson();
-    this.root = value[0];
-    this.$dbservice.auth.onAuthStateChanged(user => {
-      if (user) {
-        this.user = user
-      } else {
-        this.$router.push("/")
-      }
-    })
+    this.root = value;
   },
 
   methods: {
     async onPersonClick(newRoot) {
       if (newRoot.PersonID != this.root.PersonID) {
         let value = await this.$dbservice.GetPersonByID(newRoot.PersonID);
-        this.root = Object.assign({}, this.root, value[0]);
+        this.root = value;
       }
     },
   },
