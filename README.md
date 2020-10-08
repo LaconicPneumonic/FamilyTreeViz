@@ -40,3 +40,4 @@ Node {
 | Admin and User roles | Admin should be able to create/modify data viewed by users, so they can field issues/updates from family members |
 | Search | User should be able to search for family members |
 | Update for complex family structures | Users should be able to digest the complex relationships that can exist between family members. e.g. divorce, remarriage, ..etc |
+| Secure data (Tentative) | Users should be able to retrieve forgotten passwords (envelope encryption?) and trust that their family data is secured from basic hacking techniques |
