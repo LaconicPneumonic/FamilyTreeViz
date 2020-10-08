@@ -4,10 +4,39 @@ I come from a really large family and for years my relatives and I have been try
 
 ## GOALS
 - Individuals withing a family, regardless of technical ability, should be able to view their family tree in a simple way.
-- A family should be able to host their app for free (within reason)
+- A family should be able to host their app using free tier services
+- A family should be able to field modifications to the family tree
 
-## DESIGN
-TODO
+## High Level Design
+### Frontend (VueJS)
+The UI displays you and your nuclear family (*a node and it's neighbors in the graph*). You navigate between family members by clicking on their names.
+```
++--------------+
+|    Parent    |
++-----+--------+
+| You | Spouse |
++-----+--------+
+|   Children   |
++--------------+
+```
+### Backend (Firebase)
+The family structure is stored as a bidirected graph of nodes in Google Firestore
+```
+Node {
+    Name,
+    ID,
+    ChildrenIDs,
+    ParentIDs
+}
+```
 
-## HOW TO
-TODO
+## Future Work
+
+
+| Goal | Description |
+| ----------- | ----------- |
+| Deployment Guide | Admin should be able to follow instructions to deploy this using their own google account |
+| Additional Familial Information | User should be able to view photos, bio and other relevant information about family members |
+| Admin and User roles | Admin should be able to create/modify data viewed by users, so they can field issues/updates from family members |
+| Search | User should be able to search for family members |
+| Update for complex family structures | Users should be able to digest the complex relationships that can exist between family members. e.g. divorce, remarriage, ..etc |
