@@ -19,8 +19,8 @@ The UI displays you and your nuclear family (*a node and it's neighbors in the g
 |   Children   |
 +--------------+
 ```
-### Backend (Firebase)
-The family structure is stored as a bidirected graph of nodes in Google Firestore
+### Backend (Google Firebase)
+The family structure is stored as nodes in a bidirected graph in Firestore
 ```
 Node {
     Name,
