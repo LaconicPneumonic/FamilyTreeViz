@@ -2,6 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -30,7 +40,7 @@ const routes = [
     component: FamilyView,
     name: 'family',
     beforeEnter: function (_to, _from, next) {
-      if(DBService.store.loggedIn) next()
+      if (DBService.store.loggedIn) next()
       else next("/")
     }
   }

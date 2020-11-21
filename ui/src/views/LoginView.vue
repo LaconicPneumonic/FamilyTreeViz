@@ -1,70 +1,62 @@
 <template>
-  <div class="login-view login-grid">
-    <div class="login-form-wrapper">
-      <div class="login-image">
-        <img
-          src="@/assets/capHaitien.jpg"
-          alt="W3Schools.com"
-        />
-      </div>
-      <div class="login-welcome">
-        <h1>Welcome to your Family Tree Vizualization</h1>
-        <p>
-          Authored by Anthony Rolland.
-          <a
-            href="https://github.com/LaconicPneumonic/FamilyTreeViz"
-          >Github</a>
-        </p>
-      </div>
-      <div class="login-form">
-        <div class="login-input">
-          <span>
-            <label for="frmEmailA">
-              <font-awesome-icon class="icon" icon="user" />
-            </label>
-          </span>
-          <div>
-            <input
-              v-model="username"
-              type="email"
-              name="email"
-              id="frmEmailA"
-              placeholder="name@example.com"
-              required
-              autocomplete="email"
-            />
-          </div>
-        </div>
-        <div class="login-input">
-          <span>
-            <label for="frmPass">
-              <font-awesome-icon class="icon" icon="lock" />
-            </label>
-          </span>
-          <div>
-            <input
-              v-model="password"
-              type="password"
-              name="current-password"
-              id="frmPass"
-              placeholder="enter password"
-              required
-              autocomplete="current-password"
-            />
-          </div>
-        </div>
-        <transition name="fade">
-          <div
-            class="incorrect-login"
-            v-if="this.incorrectLogin"
-          >Your login information was incorrect, please try again</div>
-        </transition>
-        <div class="submission">
-          <button @click="submission(username, password)">Submit</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <b-container fluid class="bv-example-row d-flex">
+    <b-row class="justify-content-center align-self-center test">
+      <b-col> </b-col>
+      <b-col cols="8">
+        <b-row>
+          <b-col cols="8" sm="6">
+            <img src="@/assets/capHaitien.jpg" />
+          </b-col>
+          <b-col cols="4" sm="6">
+            <div class="login-welcome">
+              <h1>Welcome to your Family Tree Vizualization</h1>
+              <p>
+                Authored by Anthony Rolland.
+                <a href="https://github.com/LaconicPneumonic/FamilyTreeViz"
+                  >Github</a
+                >
+              </p>
+            </div>
+            <div>
+              <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                <b-form-group
+                  id="input-group-1"
+                  label="Email address:"
+                  label-for="input-1"
+                  description="We'll never share your email with anyone else."
+                >
+                  <b-form-input
+                    id="input-1"
+                    v-model="form.email"
+                    type="email"
+                    required
+                    placeholder="Enter email"
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                  id="input-group-2"
+                  label="Password:"
+                  label-for="input-1"
+                  description="Please enter your password"
+                >
+                  <b-form-input
+                    id="input-2"
+                    v-model="form.password"
+                    type="password"
+                    required
+                    placeholder="Enter password"
+                  ></b-form-input>
+                </b-form-group>
+                <b-button type="submit" variant="primary">Submit</b-button>
+                <b-button type="reset" variant="danger">Reset</b-button>
+              </b-form>
+            </div>
+          </b-col>
+        </b-row>
+      </b-col>
+      <b-col></b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -72,9 +64,11 @@ export default {
   name: "loginview",
   data() {
     return {
-      username: "",
-      password: "",
-      signedIn: undefined,
+      form: {
+        email: "",
+        password: "",
+      },
+      show: true,
       incorrectLogin: false,
     };
   },
@@ -83,76 +77,49 @@ export default {
     if (this.$dbservice.store.loggedIn) this.$router.push("family");
   },
   methods: {
-    async submission(username, password) {
-      let result = await this.$dbservice.LogInUser(username, password);
+    async onSubmit(evt) {
+      evt.preventDefault();
+      let result = await this.$dbservice.LogInUser(
+        this.form.email,
+        this.form.password
+      );
       if (!result) this.incorrectLogin = true;
       else {
         this.$router.push("family");
       }
     },
+    onReset(evt) {
+      evt.preventDefault();
+      // Reset our form values
+      this.form.email = "";
+      this.form.password = "";
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    },
   },
 };
 </script>
 
-<style>
-.login-grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-div.login-form-wrapper {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.49);
-  margin: 10vh auto 10vh auto;
-  height: 80vh;
-  max-width: 50%;
-  max-height: 50%;
-  position: relative;
-
-  display: grid;
-  grid-template-columns: 60% 40%;
-  grid-template-rows: 50% 50%;
-}
-
-div.login-form-wrapper * {
-  background-color: #c5283d;
-}
-
-.login-input {
-  margin: 5% auto 5%;
-  border-bottom: solid black;
-}
-
-.login-input div {
-  margin-left: 10%;
-  padding-bottom: 5%;
-}
-
-.login-input span {
-  float: left;
-}
-
-input {
+<style scoped>
+img {
   width: 100%;
-  border: none;
-  background: none;
-  font-family: "Roboto", sans-serif;
-  font-size: 1vh;
+  height: 100%;
+  object-fit: cover;
 }
 
-.fa-user {
-  width: 10%;
+.test {
+  width: 100%;
+}
+.centered-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-input:focus {
-  outline: none;
-}
-
-.login-welcome {
-  grid-row: 1;
-  grid-column: 2;
-  padding: 10%;
-  word-wrap: break-word;
+.bv-example-row {
+  height: 100vh;
 }
 
 .login-welcome h1 {
@@ -165,33 +132,7 @@ input:focus {
   font-size: 1.5vh;
 }
 
-.login-form {
-  grid-row: 2;
-  grid-column: 2;
-  overflow: hidden;
-  padding: 10%;
-}
-
-.login-image {
-  grid-column: 1;
-  grid-row: 1 / 3;
-  overflow: hidden;
-}
-
-.login-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: blur(2px);
-}
-
-.incorrect-login {
-  font-family: "Roboto", sans-serif;
-  font-size: 1vh;
-  background-color: white !important;
-}
-
-.submission button {
+button {
   width: 100%;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -200,13 +141,5 @@ input:focus {
   padding: 2%;
   font-family: "Bebas Neue";
   font-size: 2vh;
-}
-
-.submission button:hover {
-  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.18), 0 5px 5px rgba(0, 0, 0, 0.12);
-}
-
-.submission {
-  margin: 5% auto 5%;
 }
 </style>
